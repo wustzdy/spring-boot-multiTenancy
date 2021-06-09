@@ -1,2 +1,2 @@
-# spring-boot-multiTenancy
-spring-boot-multiTenancy
+# spring-boot-multiTenant
+spring-boot-multiTenant
