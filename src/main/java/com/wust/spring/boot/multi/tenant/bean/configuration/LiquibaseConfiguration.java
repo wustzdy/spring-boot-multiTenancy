@@ -12,11 +12,9 @@ public class LiquibaseConfiguration {
     public SpringLiquibase liquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
-        //指定changelog的位置，这里使用的一个master文件引用其他文件的方式
         liquibase.setChangeLog("classpath:user-changelog.xml");
-        // liquibase.setContexts(liquibaseProperties.getContexts());
-        //如果设置为true：第一次执行不会报错，第二次将会报错，导致程序无法启动，所以第一次执行完后一定要改为：false
-        liquibase.setShouldRun(false);
+        liquibase.setContexts("development,test,production");
+        liquibase.setShouldRun(true);
         return liquibase;
     }
 
