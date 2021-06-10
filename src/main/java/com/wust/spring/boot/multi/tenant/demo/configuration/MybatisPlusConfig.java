@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableTransactionManagement
+/*@EnableTransactionManagement
 @Configuration
-@MapperScan("com.baomidou.cloud.service.*.mapper*")
+@MapperScan("com.baomidou.cloud.service.*.mapper*")*/
 public class MybatisPlusConfig {
-    @Bean
+   /* @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         return paginationInterceptor;
-    }
+    }*/
 }

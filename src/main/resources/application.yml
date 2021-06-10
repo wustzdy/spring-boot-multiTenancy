@@ -26,4 +26,4 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 server:
-  port: 8003
+  port: 8004

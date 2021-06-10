@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-SpringBootStandardApplication
+com.wust.spring.boot.multi.tenant.demo.SpringBootMultiTenantApplication
