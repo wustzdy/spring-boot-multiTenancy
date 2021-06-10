@@ -11,4 +11,8 @@ public interface TenantService {
     Tenant getTenant(String tenantName);
 
     List<Tenant> getTenantList();
+
+    public Tenant getTenantByName(String name);
+
+    public Tenant createTenant(String tenantName);
 }

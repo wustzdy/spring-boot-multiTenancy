@@ -8,5 +8,5 @@ public class Tenant {
     private String name;
     private String description;
     private TenantStatus status;
-    private Long tenantId;
+    private Long id;
 }

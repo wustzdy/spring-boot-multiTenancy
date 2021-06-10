@@ -1,10 +1,14 @@
 package com.wust.spring.boot.multi.tenant.bean.service.impl;
 
+import com.wust.spring.boot.multi.tenant.bean.contant.TenantMessageCodes;
+import com.wust.spring.boot.multi.tenant.bean.contant.TenantStatus;
 import com.wust.spring.boot.multi.tenant.bean.entity.TenantEntity;
+import com.wust.spring.boot.multi.tenant.bean.error.TenantException;
 import com.wust.spring.boot.multi.tenant.bean.mapper.TenantMapper;
 import com.wust.spring.boot.multi.tenant.bean.model.Tenant;
 import com.wust.spring.boot.multi.tenant.bean.util.JacksonUtil;
 import com.wust.spring.boot.multi.tenant.bean.service.TenantService;
+import liquibase.pro.packaged.T;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +55,29 @@ public class TenantServiceImpl implements TenantService {
                     return target;
                 }).collect(Collectors.toList());
         return tenantList;
+    }
+
+    @Override
+    public Tenant getTenantByName(String name) {
+        Tenant tenant = new Tenant();
+        TenantEntity tenantEntity = tenantMapper.selectByTenantName(name);
+        if (tenantEntity == null) {
+            return null;
+        }
+        BeanUtils.copyProperties(tenantMapper.selectByTenantName(name), tenant);
+        return tenant;
+    }
+
+    @Override
+    public Tenant createTenant(String tenantName) {
+        TenantEntity tenantEntity = new TenantEntity();
+        tenantEntity.setName(tenantName);
+        tenantEntity.setStatus(TenantStatus.NORMAL);
+        if (tenantMapper.insert(tenantEntity) != 1) {
+            throw new TenantException(TenantMessageCodes.CREATE_TABLE_FAILED);
+        }
+        Tenant tenant = new Tenant();
+        BeanUtils.copyProperties(tenantEntity, tenant);
+        return tenant;
     }
 }

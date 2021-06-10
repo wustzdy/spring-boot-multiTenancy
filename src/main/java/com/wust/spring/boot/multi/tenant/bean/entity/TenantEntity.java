@@ -10,15 +10,13 @@ import lombok.Data;
 @Data
 @TableName(TenantEntity.TABLE_NAME)
 public class TenantEntity {
-    public static final String TABLE_NAME = "sys_tenant";
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    public static final String TABLE_NAME = "tenant";
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
     @TableField(value = "name")
     private String name;
     @TableField(value = "description")
     private String description;
     @TableField(value = "status")
     private TenantStatus status;
-    @TableField(value = "tenant_id")
-    private Long tenantId;
 }

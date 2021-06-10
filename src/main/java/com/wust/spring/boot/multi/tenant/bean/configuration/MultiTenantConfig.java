@@ -17,10 +17,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-@MapperScan("com.wust.spring.boot.multi.tenant.bean.mapper")
+/*@Configuration
+@MapperScan("com.wust.spring.boot.multi.tenant.bean.mapper")*/
 public class MultiTenantConfig {
-    @Autowired
+   /* @Autowired
     private ApiContext apiContext;
 
     @Bean
@@ -28,11 +28,11 @@ public class MultiTenantConfig {
         return new OptimisticLockerInterceptor();
     }
 
-    /**
+    *//**
      * 分页插件
      *
      * @return
-     */
+     *//*
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
@@ -66,10 +66,10 @@ public class MultiTenantConfig {
             @Override
             public boolean doTableFilter(String tableName) {
                 // 是否需要需要过滤某一张表
-              /*  List<String> tableNameList = Arrays.asList("sys_user");
+              *//*  List<String> tableNameList = Arrays.asList("sys_user");
                 if (tableNameList.contains(tableName)){
                     return true;
-                }*/
+                }*//*
                 return false;
             }
         });
@@ -78,5 +78,5 @@ public class MultiTenantConfig {
         paginationInterceptor.setSqlParserList(sqlParserList);
 
         return paginationInterceptor;
-    }
+    }*/
 }
