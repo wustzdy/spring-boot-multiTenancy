@@ -1,6 +1,7 @@
 package com.wust.spring.boot.multi.tenant.demo.configuration;
 
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
@@ -18,9 +19,14 @@ import java.util.List;
 
 @Configuration
 @MapperScan("com.wust.spring.boot.multi.tenant.demo.mapper")//配置扫描的mapper包
-public class MutliTenantConfig {
+public class MultiTenantConfig {
     @Autowired
     private ApiContext apiContext;
+
+    @Bean
+    OptimisticLockerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInterceptor();
+    }
 
     /**
      * 分页插件
