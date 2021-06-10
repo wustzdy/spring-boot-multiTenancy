@@ -16,7 +16,7 @@ public class LiquibaseConfiguration {
         liquibase.setChangeLog("classpath:user-changelog.xml");
         // liquibase.setContexts(liquibaseProperties.getContexts());
         //如果设置为true：第一次执行不会报错，第二次将会报错，导致程序无法启动，所以第一次执行完后一定要改为：false
-//        liquibase.setShouldRun(false);
+        liquibase.setShouldRun(true);
         return liquibase;
     }
 
