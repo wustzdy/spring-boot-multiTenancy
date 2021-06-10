@@ -64,7 +64,8 @@ public class TenantServiceImpl implements TenantService {
         if (tenantEntity == null) {
             return null;
         }
-        BeanUtils.copyProperties(tenantMapper.selectByTenantName(name), tenant);
+        BeanUtils.copyProperties(tenantEntity, tenant);
+        tenant.setAccountId(tenantEntity.getOwnedById());
         return tenant;
     }
 
@@ -78,6 +79,7 @@ public class TenantServiceImpl implements TenantService {
         }
         Tenant tenant = new Tenant();
         BeanUtils.copyProperties(tenantEntity, tenant);
+        tenant.setAccountId(tenantEntity.getOwnedById());
         return tenant;
     }
 }

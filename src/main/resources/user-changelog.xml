@@ -6,4 +6,5 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <include file="iam-changelogs/V1.0.0/create_tenant.sql"/>
+    <include file="iam-changelogs/V1.0.0/create_accounts_table.sql"/>
 </databaseChangeLog>

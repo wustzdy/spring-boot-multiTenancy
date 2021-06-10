@@ -4,6 +4,7 @@ import com.wust.spring.boot.multi.tenant.bean.api.ExecutionContextProvider;
 import com.wust.spring.boot.multi.tenant.bean.contant.IamConstants;
 import com.wust.spring.boot.multi.tenant.bean.context.CallerContext;
 import com.wust.spring.boot.multi.tenant.bean.model.Tenant;
+import com.wust.spring.boot.multi.tenant.bean.service.AccountService;
 import com.wust.spring.boot.multi.tenant.bean.service.TenantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class MultiTenantInitializer {
     private ExecutionContextProvider executionContextProvider;
     @Autowired
     private TenantService tenantService;
+    @Autowired
+    private AccountService accountService;
 
     @PostConstruct
     private void init() throws Exception {
@@ -31,7 +34,7 @@ public class MultiTenantInitializer {
 
         bindTenantContext(IamConstants.SYSTEM_TENANT_NAME);
         try {
-
+            initRootAccounts();
         } finally {
             executionContextProvider.unbind();
         }
@@ -44,6 +47,12 @@ public class MultiTenantInitializer {
         }
     }
 
+    private void initRootAccounts() {
+        CallerContext callerContext = executionContextProvider.current().get(CallerContext.CONTEXT_KEY);
+        long rootId = callerContext.getCallerId();
+        accountService.createRootAccount(rootId);
+    }
+
     private void bindTenantContext(String tenantName) {
         executionContextProvider.bind();
         CallerContext callerContext = new CallerContext();
@@ -54,6 +63,7 @@ public class MultiTenantInitializer {
             tenant = initTenantByName(tenantName);
         }
         callerContext.setTenantId(tenant.getId());
+        callerContext.setCallerId(tenant.getAccountId());
     }
 
     @Transactional
@@ -63,6 +73,9 @@ public class MultiTenantInitializer {
         try {
 //            long rootId = idGenerator.nextId();
             long rootId = 100l;
+            if (IamConstants.DEFAULT_TENANT_NAME.equals(tenantName)) {
+                rootId = 20000l;
+            }
 
             CallerContext callerContext = new CallerContext();
             callerContext.setCallerId(rootId);
