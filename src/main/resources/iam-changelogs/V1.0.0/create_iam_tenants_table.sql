@@ -2,7 +2,7 @@
 
 --changeset maruijin:20200603-1
 --注意：tenants表没有tenant_id字段
-CREATE TABLE `iam_tenants` (
+CREATE TABLE `sys_tenant` (
     `id` int (11) NOT NULL AUTO_INCREMENT,
     `name` varchar(64) NOT NULL COMMENT '租户名称',
     `description` varchar(512) NOT NULL DEFAULT '' COMMENT '描述',
