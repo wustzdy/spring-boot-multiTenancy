@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@MapperScan("com.wust.spring.boot.multi.tenant.demo.mapper")//配置扫描的mapper包
+@MapperScan("com.wust.spring.boot.multi.tenant.demo.mapper")
 public class MultiTenantConfig {
     @Autowired
     private ApiContext apiContext;

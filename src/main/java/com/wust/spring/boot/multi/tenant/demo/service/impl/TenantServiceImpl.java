@@ -10,6 +10,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Component
 public class TenantServiceImpl implements TenantService {
@@ -36,5 +39,17 @@ public class TenantServiceImpl implements TenantService {
         Tenant tenant = new Tenant();
         BeanUtils.copyProperties(tenantEntity, tenant);
         return tenant;
+    }
+
+    @Override
+    public List<Tenant> getTenantList() {
+        List<TenantEntity> tenantEntities = tenantMapper.selectList(null);
+        List<Tenant> tenantList = tenantEntities.stream()
+                .map(x -> {
+                    Tenant target = new Tenant();
+                    BeanUtils.copyProperties(x, target);
+                    return target;
+                }).collect(Collectors.toList());
+        return tenantList;
     }
 }
