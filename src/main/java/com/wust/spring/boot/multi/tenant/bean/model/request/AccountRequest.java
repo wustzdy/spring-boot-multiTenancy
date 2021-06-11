@@ -22,7 +22,7 @@ public class AccountRequest {
     @Size(min = 1, max = 20)
     @Pattern(regexp = "^[a-zA-Z0-9_]{1,20}$")
     private String accountName;
-    @Schema(name = "emailAddress", description = "用户邮件地址")
+   /* @Schema(name = "emailAddress", description = "用户邮件地址")
     @NotEmpty
     @Email
     private String emailAddress;
@@ -40,5 +40,5 @@ public class AccountRequest {
     @NotEmpty
     private String accountRoleId;
     @Schema(name = "accountPolicyId", description = "用户权限列表")
-    private List<String> accountPolicyId;
+    private List<String> accountPolicyId;*/
 }

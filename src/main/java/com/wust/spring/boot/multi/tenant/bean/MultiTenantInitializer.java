@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.security.SecureRandom;
 
 @Component
 @Slf4j
@@ -71,10 +72,10 @@ public class MultiTenantInitializer {
         executionContextProvider.bind();
 
         try {
-//            long rootId = idGenerator.nextId();
-            long rootId = 100l;
+            SecureRandom secureRandom = new SecureRandom();
+            long rootId = secureRandom.nextInt();
             if (IamConstants.DEFAULT_TENANT_NAME.equals(tenantName)) {
-                rootId = 20000l;
+                rootId = 100l;
             }
 
             CallerContext callerContext = new CallerContext();

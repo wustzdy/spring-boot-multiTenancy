@@ -1,5 +1,6 @@
 package com.wust.spring.boot.multi.tenant.bean.service.impl;
 
+import com.wust.spring.boot.multi.tenant.bean.contant.IamConstants;
 import com.wust.spring.boot.multi.tenant.bean.contant.TenantMessageCodes;
 import com.wust.spring.boot.multi.tenant.bean.contant.TenantStatus;
 import com.wust.spring.boot.multi.tenant.bean.entity.TenantEntity;
@@ -74,9 +75,14 @@ public class TenantServiceImpl implements TenantService {
         TenantEntity tenantEntity = new TenantEntity();
         tenantEntity.setName(tenantName);
         tenantEntity.setStatus(TenantStatus.NORMAL);
+
+        if (IamConstants.DEFAULT_TENANT_NAME.equals(tenantName)) {
+            tenantEntity.setId(200l);
+        }
         if (tenantMapper.insert(tenantEntity) != 1) {
             throw new TenantException(TenantMessageCodes.CREATE_TABLE_FAILED);
         }
+
         Tenant tenant = new Tenant();
         BeanUtils.copyProperties(tenantEntity, tenant);
         tenant.setAccountId(tenantEntity.getOwnedById());

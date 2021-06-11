@@ -1,7 +1,7 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/Wustzdy_sql?createDatabaseIfNotExist=true
+    url: jdbc:mysql://127.0.0.1:3306/Wustzdy_sql?createDatabaseIfNotExist=true&nullCatalogMeansCurrent=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
