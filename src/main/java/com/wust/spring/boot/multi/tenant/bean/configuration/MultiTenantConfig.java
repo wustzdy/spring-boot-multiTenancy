@@ -1,14 +1,18 @@
 package com.wust.spring.boot.multi.tenant.bean.configuration;
 
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.core.parser.SqlParserHelper;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
+import com.wust.spring.boot.multi.tenant.bean.api.ExecutionContextProvider;
 import com.wust.spring.boot.multi.tenant.bean.context.ApiContext;
+import com.wust.spring.boot.multi.tenant.bean.context.CallerContext;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
+import org.apache.ibatis.mapping.MappedStatement;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,10 +21,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-/*@Configuration
-@MapperScan("com.wust.spring.boot.multi.tenant.bean.mapper")*/
+@Configuration
+@MapperScan("com.wust.spring.boot.multi.tenant.bean.mapper")
 public class MultiTenantConfig {
-   /* @Autowired
+    @Autowired
     private ApiContext apiContext;
 
     @Bean
@@ -28,13 +32,9 @@ public class MultiTenantConfig {
         return new OptimisticLockerInterceptor();
     }
 
-    *//**
-     * 分页插件
-     *
-     * @return
-     *//*
+
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
+    public PaginationInterceptor paginationInterceptor(ExecutionContextProvider executionContextProvider) {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
 
@@ -50,11 +50,11 @@ public class MultiTenantConfig {
             @Override
             public Expression getTenantId(boolean select) {
                 // 从当前系统上下文中取出当前请求的服务商ID，通过解析器注入到SQL中。
-                Long currentProviderId = apiContext.getCurrentTenantId();
-                if (null == currentProviderId) {
+                CallerContext callerContext = executionContextProvider.current().get(CallerContext.CONTEXT_KEY);
+                if (null == callerContext) {
                     throw new RuntimeException("Get CurrentProviderId error.");
                 }
-                return new LongValue(currentProviderId);
+                return new LongValue(callerContext.getTenantId());
             }
 
             @Override
@@ -66,17 +66,24 @@ public class MultiTenantConfig {
             @Override
             public boolean doTableFilter(String tableName) {
                 // 是否需要需要过滤某一张表
-              *//*  List<String> tableNameList = Arrays.asList("sys_user");
-                if (tableNameList.contains(tableName)){
+               /* List<String> tableNameList = Arrays.asList("sys_user");
+                if (tableNameList.contains(tableName)) {
                     return true;
-                }*//*
+                }*/
                 return false;
             }
         });
 
         sqlParserList.add(tenantSqlParser);
         paginationInterceptor.setSqlParserList(sqlParserList);
+        paginationInterceptor.setSqlParserFilter(metaObject -> {
+            MappedStatement ms = SqlParserHelper.getMappedStatement(metaObject);
+            if (ms.getId().startsWith("com.wust.spring.boot.multi.tenant.bean.mapper.Tenant")) {
+                return true;
+            }
+            return false;
+        });
 
         return paginationInterceptor;
-    }*/
+    }
 }

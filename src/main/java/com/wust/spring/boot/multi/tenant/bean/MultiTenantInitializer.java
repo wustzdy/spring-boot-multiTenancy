@@ -41,7 +41,7 @@ public class MultiTenantInitializer {
 
         bindTenantContext(IamConstants.DEFAULT_TENANT_NAME);
         try {
-
+            initRootAccounts();
         } finally {
             executionContextProvider.unbind();
         }
