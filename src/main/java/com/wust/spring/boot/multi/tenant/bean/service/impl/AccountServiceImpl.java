@@ -8,6 +8,8 @@ import com.wust.spring.boot.multi.tenant.bean.contant.TenantMessageCodes;
 import com.wust.spring.boot.multi.tenant.bean.entity.AccountEntity;
 import com.wust.spring.boot.multi.tenant.bean.error.TenantException;
 import com.wust.spring.boot.multi.tenant.bean.mapper.AccountMapper;
+import com.wust.spring.boot.multi.tenant.bean.model.request.AccountRequest;
+import com.wust.spring.boot.multi.tenant.bean.model.response.AccountResponse;
 import com.wust.spring.boot.multi.tenant.bean.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +42,10 @@ public class AccountServiceImpl implements AccountService {
         if (accountMapper.insert(accountEntity) != 1) {
             throw new TenantException(TenantMessageCodes.CREATE_TABLE_FAILED);
         }
+    }
+
+    @Override
+    public AccountResponse createAccount(AccountRequest AccountRequest) {
+        return null;
     }
 }
