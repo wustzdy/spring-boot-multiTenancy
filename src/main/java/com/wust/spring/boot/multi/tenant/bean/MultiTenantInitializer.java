@@ -35,6 +35,7 @@ public class MultiTenantInitializer {
 
         bindTenantContext(IamConstants.SYSTEM_TENANT_NAME);
         try {
+            //这里面绑定tenantId
             initRootAccounts();
         } finally {
             executionContextProvider.unbind();
@@ -69,6 +70,7 @@ public class MultiTenantInitializer {
 
     @Transactional
     public Tenant initTenantByName(String tenantName) {
+        //这里面给Tenant绑定ownedById,
         executionContextProvider.bind();
 
         try {
