@@ -1,29 +1,23 @@
 spring:
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/Wustzdy_sql?createDatabaseIfNotExist=true&nullCatalogMeansCurrent=true
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/Wustzdy_sql
     username: root
-    password: 123456
-    initial-size: 10
-    max-active: 50
-    min-idle: 10
-    max-wait: 60000
-    pool-prepared-statements: true
-    max-pool-prepared-statement-per-connection-size: 20
-    validation-query: SELECT 1 FROM DUAL
-    test-on-borrow: false
-    test-on-return: false
-    test-while-idle: true
-    time-between-eviction-runs-millis: 60000
-    filters: stat,wall
-  liquibase:
-    change-log: classpath:user-changelog.xml
-    enabled: true
+    password: zdy110629
+#  liquibase:
+#    change-log: classpath:user-changelog.xml
+#    enabled: tr
+mysql:
+  iam:
+    liquibaseDataSource:
+      driver: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/Wustzdy_sql?createDatabaseIfNotExist=true
+      username: root
+      password: zdy110629
+      maxPoolSize: 2
+      connectionTimeOut: 10000
+      maxLifeTime: 600000
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 server:
   port: 8004

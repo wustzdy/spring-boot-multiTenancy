@@ -27,7 +27,7 @@ public class MultiTenantInitializer {
     @Autowired
     private AccountService accountService;
 
-    @PostConstruct
+//    @PostConstruct
     private void init() throws Exception {
         if (!bootstrap) {
             return;
